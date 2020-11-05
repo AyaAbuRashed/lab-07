@@ -6,17 +6,19 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const superagent = require('superagent');
-const PORT = process.env.PORT || 4000;
+const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
+const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
+const TRAIL_API_KEY = process.env.TRAIL_API_KEY;
+const PORT = process.env.PORT || 3000;
 
 let app = express();
 app.use(cors());
 
 app.get('/', (request, response) => {
-  response.send('Welcome to Home Page!!');
+  response.send('Welcome to Home Page!');
 });
 
 app.get('/location', locationHandler);
-
 app.get('/weather', weatherHandler);
 app.get('/trails', trailHandler);
 
@@ -67,10 +69,8 @@ function Weather(weatherData) {
   this.time = new Date(weatherData.valid_date).toDateString();
 }
 function trailHandler(request, response) {
-  superagent(
-
-
-  ).then((trailRes) => {
+  const url = '';
+  superagent.get(url).then((trailRes) => {
     console.log(trailRes);
     const trailSummary = trailRes.body.data.map((trailData) => {
       return new Trail(trailData);
